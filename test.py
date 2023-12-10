@@ -1,6 +1,6 @@
 import unittest
+import sys
 from grid import Grid
-
 from game import Game
 from block import Block
 from colors import Colors
