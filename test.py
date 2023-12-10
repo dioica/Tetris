@@ -3,7 +3,7 @@ import unittest
 #from game import Game
 #from block import Block
 from colors import Colors
-#from blocks import *
+from blocks import *
 #from position import Position
 
 '''
