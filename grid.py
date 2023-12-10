@@ -1,4 +1,5 @@
 import pygame
+import sys
 from colors import Colors
 
 class Grid:
