@@ -99,10 +99,8 @@ class Grid:
                     if column not in (dict_of_empty_cells.get(first_row)):
                         dict_of_empty_cells[row].append(column)
         
-        print(dict_of_empty_cells)
-        print()
-
-        # сортировать на всякия случай ?????
+        #print(dict_of_empty_cells)
+        #print()
         return dict_of_empty_cells
                         
 
