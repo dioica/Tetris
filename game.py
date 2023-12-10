@@ -6,7 +6,6 @@ from blocks import *
 class Game:
     def __init__(self):
         self.grid = Grid()
-        #self.blocks = []
         self.blocks = [IBlock(), JBlock(), LBlock(), OBlock(), SBlock(), TBlock(), ZBlock()]
         self.current_block = self.get_random_block()
         self.next_block = self.get_random_block()

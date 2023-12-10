@@ -1,6 +1,5 @@
 import unittest
 from grid import Grid
-
 from game import Game
 from block import Block
 from colors import Colors
@@ -133,6 +132,502 @@ class TestGrid(unittest.TestCase):
         result = {18: [0, 1, 2, 3, 4, 5, 6, 7, 8],
                   17: [9]}
         self.assertEqual(self.t_grid.search_empty_cells(), result)
+        
+
+class TestGame(unittest.TestCase):
+    def setUp(self):
+        self.t_game = Game()
+        self.t_game.grid = Grid()
+        #self.blocks = [IBlock(), JBlock(), LBlock(), OBlock(), SBlock(), TBlock(), ZBlock()]
+        self.t_game.current_block = OBlock()
+        
+
+    def tearDown(self):
+        del self.t_game.current_block
+        del self.t_game.grid
+
+
+    def test_move_left_move(self):
+        first_pos = []
+        for i in range(4):
+            first_pos.append(self.t_game.current_block.get_cell_positions()[i])
+        self.t_game.move_left()
+
+        for i in range(0):
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].row, first_pos[i].row)
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, first_pos[i].column - 1)
+     
+    def test_move_left_not_move(self):
+        first_pos = []
+        for i in range(4):
+            first_pos.append(self.t_game.current_block.get_cell_positions()[i])
+
+        count_of_move = 3
+        for i in range(count_of_move):
+            self.t_game.move_left()
+
+        for i in range(0):
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].row, first_pos[i].row)
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, first_pos[i].column - (count_of_move - 1))
+
+    def test_move_right_move(self):
+        first_pos = []
+        for i in range(4):
+            first_pos.append(self.t_game.current_block.get_cell_positions()[i])
+        self.t_game.move_right()
+
+        for i in range(0):
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].row, first_pos[i].row)
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, first_pos[i].column + 1)
+        
+    def test_move_right_not_move(self):
+        first_pos = []
+        for i in range(4):
+            first_pos.append(self.t_game.current_block.get_cell_positions()[i])
+
+        count_of_move = 4
+        for i in range(count_of_move):
+            self.t_game.move_left()
+
+        for i in range(0):
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].row, first_pos[i].row)
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, 9)
+
+
+    def test_move_down_move(self):
+        first_pos = []
+        for i in range(4):
+            first_pos.append(self.t_game.current_block.get_cell_positions()[i])
+
+        self.t_game.move_down()
+
+        for i in range(0):
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].row, first_pos[i].row + 1)
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, first_pos[i].column)
+        
+    def test_move_down_not_move(self):
+        first_pos = []
+        for i in range(4):
+            first_pos.append(self.t_game.current_block.get_cell_positions()[i])
+
+        count_of_move = 20
+        for i in range(count_of_move):
+            self.t_game.move_down()
+
+        for i in range(0):
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].row, first_pos[i].row + 18)
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, first_pos[i].column)
+
+    # ?????????
+    def test_lock_block(self):
+        pass 
+
+    def test_rotate_change(self):
+        self.t_game.current_block = JBlock()
+        first_rotation = self.t_game.current_block.rotation_state
+        self.t_game.rotate()
+        self.assertEqual(self.t_game.current_block.rotation_state, first_rotation + 1)
+
+    def test_rotate_not(self):
+        first_rotation = self.t_game.current_block.rotation_state
+        self.t_game.rotate()
+        self.assertEqual(self.t_game.current_block.rotation_state, first_rotation)
+
+    def test_rotate_4_times(self):
+        self.t_game.current_block = JBlock()
+        first_rotation = self.t_game.current_block.rotation_state
+        for i in range(4):
+            self.t_game.rotate()
+        self.assertEqual(self.t_game.current_block.rotation_state, first_rotation)
+
+    def test_reset(self):
+        self.t_game.blocks = []
+        self.t_game.reset()
+        result = [IBlock(), JBlock(), LBlock(), OBlock(), SBlock(), TBlock(), ZBlock()]
+        #for i in range(len(result)):
+            #self.assertEquals(self.t_game.blocks[i], result[i])
+
+    def test_move_for_rotation_right(self):
+        self.t_game.current_block = LBlock()
+        self.t_game.rotate()
+        self.t_game.current_block.move(0, -4)
+        first_rotation = self.t_game.current_block.rotation_state
+        self.t_game.rotate()
+        self.assertEqual(self.t_game.current_block.rotation_state, first_rotation)
+
+        self.t_game.move_for_rotation(first_rotation + 1)
+        self.assertEqual(self.t_game.current_block.rotation_state, first_rotation + 1)
+
+    def test_move_for_rotation_left(self):
+        self.t_game.current_block = LBlock()
+        self.t_game.rotate()
+        self.t_game.current_block.move(0, 5)
+        first_rotation = self.t_game.current_block.rotation_state
+        self.t_game.rotate()
+        self.assertEqual(self.t_game.current_block.rotation_state, first_rotation)
+
+        self.t_game.move_for_rotation(first_rotation + 1)
+        self.assertEqual(self.t_game.current_block.rotation_state, first_rotation + 1)
+
+
+    def test_fall_position_last_row(self):
+        self.t_game.grid.grid = [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            ]
+        self.t_game.current_block = LBlock()
+        self.assertEqual(self.t_game.fall_position(), 19)
+        
+
+    def test_fall_position_1_rotation(self):
+        self.t_game.grid.grid = [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [1, 1, 1, 1, 0, 1, 0, 1, 1, 1]
+            ]
+        self.t_game.current_block = LBlock()
+        self.t_game.rotate()
+        self.assertEqual(self.t_game.fall_position(), 18)
+        
+
+    def test_fall_position_2_rotation(self):
+        self.t_game.grid.grid = [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+            [1, 1, 1, 1, 0, 1, 0, 1, 1, 1]
+            ]
+        self.t_game.current_block = LBlock()
+        self.t_game.rotate()
+        self.t_game.rotate()
+        self.assertEqual(self.t_game.fall_position(), 12)
+
+    def test_count_of_empty_cells_under_block_no_empty_cells(self):
+        self.t_game.grid.grid = [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            ]
+        self.t_game.current_block = LBlock()
+        
+        self.assertEqual(self.t_game.count_of_empty_cells_under_block(19), 0)
+        
+
+    def test_count_of_empty_cells_under_block_1_empty_cells(self):
+        self.t_game.grid.grid = [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1, 1, 0, 0, 0, 0]
+            ]
+        self.t_game.current_block = LBlock()
+        
+        self.assertEqual(self.t_game.count_of_empty_cells_under_block(18), 1)
+
+    def test_count_of_empty_cells_under_block_4_empty_cells(self):
+        self.t_game.grid.grid = [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1, 1, 0, 0, 0, 0]
+            ]
+        self.t_game.current_block = LBlock()
+
+        self.assertEqual(self.t_game.count_of_empty_cells_under_block(17), 3)
+
+    def test_auto_tetris_empty_grid(self):
+        self.t_game.grid.grid = [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            ]
+        self.t_game.current_block = LBlock()
+
+        self.t_game.auto_tetris()
+        result = [0, 1, 2, 2]
+
+        for i in range(len(result)):
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, result[i])
+        self.assertEqual(self.t_game.current_block.rotation_state, 0)
+
+    def test_auto_tetris_not_empty_grid_0_rotate(self):
+        self.t_game.grid.grid = [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [1, 0, 0, 0, 1, 0, 0, 1, 1, 0]
+            ]
+        self.t_game.current_block = LBlock()
+
+        self.t_game.auto_tetris()
+        result = [1, 2, 3, 3]
+
+        for i in range(len(result)):
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, result[i])
+        self.assertEqual(self.t_game.current_block.rotation_state, 0)
+
+    def test_auto_tetris_not_empty_grid_1_rotate(self):
+        self.t_game.grid.grid = [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [1, 0, 0, 1, 0, 0, 0, 0, 0, 0]
+            ]
+        self.t_game.current_block = LBlock()
+
+        self.t_game.auto_tetris()
+        result = [1, 1, 1, 2]
+
+        for i in range(len(result)):
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, result[i])
+        self.assertEqual(self.t_game.current_block.rotation_state, 1)
+
+
+    def test_auto_tetris_not_empty_grid_2_rotate(self):
+        self.t_game.grid.grid = [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [1, 1, 0, 0, 0, 0, 0, 1, 1, 1],
+            [1, 0, 0, 1, 1, 1, 0, 0, 0, 0]
+            ]
+        self.t_game.current_block = LBlock()
+
+        self.t_game.auto_tetris()
+        result = [2, 2, 3, 4]
+
+        for i in range(len(result)):
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, result[i])
+        self.assertEqual(self.t_game.current_block.rotation_state, 2)
+
+    def test_auto_tetris_not_empty_grid_3_rotate(self):
+        self.t_game.grid.grid = [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+            [1, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+            [1, 0, 1, 1, 0, 0, 0, 0, 0, 0]
+            ]
+        self.t_game.current_block = LBlock()
+
+        self.t_game.auto_tetris()
+        result = [0, 1, 1, 1]
+
+        for i in range(len(result)):
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, result[i])
+        self.assertEqual(self.t_game.current_block.rotation_state, 3)
+
+
+    def test_auto_tetris_empty_cells_under_block_3_rotation(self):
+        self.t_game.grid.grid = [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [1, 0, 0, 1, 1, 0, 0, 1, 1, 0]
+            ]
+        self.t_game.current_block = LBlock()
+
+        self.t_game.auto_tetris()
+        result = [8, 9, 9, 9]
+
+        for i in range(len(result)):
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, result[i])
+        self.assertEqual(self.t_game.current_block.rotation_state, 3)
 
 if __name__ == '__main__':
     unittest.main()

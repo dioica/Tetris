@@ -1,23 +1,6 @@
 from block import Block
 from position import Position
 
-'''
-class L1Block(Block):
-	def __init__(self):
-		super().__init__(id = 11)
-
-
-        #self.high = [0, 0, 0, 0]
-		self.cells = {
-			0: [Position(0, 2), Position(1, 0), Position(1, 1), Position(1, 2)],
-			1: [Position(0, 1), Position(1, 1), Position(2, 1), Position(2, 2)],
-			2: [Position(1, 0), Position(1, 1), Position(1, 2), Position(2, 0)],
-			3: [Position(0, 0), Position(0, 1), Position(1, 1), Position(2, 1)]
-		}
-          
-		self.move(0, 3)
-'''
-
 class LBlock(Block):
     def __init__(self):
         super().__init__(id = 1)
@@ -32,7 +15,8 @@ class LBlock(Block):
         # всегда начинать с самой левой клетки
         # отдельно хранить клетку X для каждого поворота
         self.cells = {
-			0: [Position(1, 0), Position(0, 2), Position(1, 1), Position(1, 2)],
+			#0: [Position(1, 0), Position(0, 2), Position(1, 1), Position(1, 2)],
+            0: [Position(1, 0), Position(1, 1), Position(1, 2), Position(0, 2)],
 			1: [Position(2, 1), Position(1, 1), Position(0, 1), Position(2, 2)],
 			2: [Position(2, 0), Position(1, 0), Position(1, 1), Position(1, 2)],
 			3: [Position(0, 0), Position(0, 1), Position(1, 1), Position(2, 1)]
