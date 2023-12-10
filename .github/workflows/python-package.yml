@@ -22,7 +22,7 @@ jobs:
     - run: git submodule init
     - run: git submodule update
     - run: pip install --user cpp-coveralls
-    - run: pip install pygame
+    #- run: pip install pygame
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
