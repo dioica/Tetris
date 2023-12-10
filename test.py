@@ -1,12 +1,11 @@
 import unittest
-#from grid import Grid
-#from game import Game
-#from block import Block
+from grid import Grid
+from game import Game
+from block import Block
 from colors import Colors
 from blocks import *
-#from position import Position
+from position import Position
 
-'''
 class TestGrid(unittest.TestCase):
     def setUp(self):
         self.t_grid = Grid()
@@ -135,4 +134,3 @@ class TestGrid(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-'''
