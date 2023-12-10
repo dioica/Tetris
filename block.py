@@ -8,8 +8,9 @@ class Block:
 
         self.heigh = []
         self.lenght = []
-        self.left_offset = []
-        self.right_offset = []
+        #self.left_offset = []
+        #self.right_offset = []
+        self.X = []
         self.irregularities = []
 
         self.cells = {}

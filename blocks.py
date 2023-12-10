@@ -22,21 +22,24 @@ class LBlock(Block):
     def __init__(self):
         super().__init__(id = 1)
 
-        self.heigh = []
-        self.lenght = []
-        self.left_offset = []
-        self.right_offset = []
-        self.irregularities = []
+        self.heigh = [2, 3, 2, 3]
+        self.lenght = [3, 2, 3, 2]
+        #self.left_offset = [0, 0, 0, 1]
+        #self.right_offset = [2, 1, 2, 0]
+        self.irregularities = [ [0, 0, 0], [0, 0], [0, 1, 1], [2, 0] ]
+        self.X = [0, 0, 0, 3]
 
+        # всегда начинать с самой левой клетки
+        # отдельно хранить клетку X для каждого поворота
         self.cells = {
-			0: [Position(0, 2), Position(1, 0), Position(1, 1), Position(1, 2)],
-			1: [Position(0, 1), Position(1, 1), Position(2, 1), Position(2, 2)],
-			2: [Position(1, 0), Position(1, 1), Position(1, 2), Position(2, 0)],
+			0: [Position(1, 0), Position(0, 2), Position(1, 1), Position(1, 2)],
+			1: [Position(2, 1), Position(1, 1), Position(0, 1), Position(2, 2)],
+			2: [Position(2, 0), Position(1, 0), Position(1, 1), Position(1, 2)],
 			3: [Position(0, 0), Position(0, 1), Position(1, 1), Position(2, 1)]
 		}
 
         self.move(0, 3)
-        
+
 
 class JBlock(Block):
     def __init__(self):
