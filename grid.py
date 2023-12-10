@@ -74,6 +74,38 @@ class Grid:
             for column in range(self.num_cols):
                 self.grid[row][column] = 0
 
+    def all_cells_above_are_empty(self, row, column):
+        for i in range(row, 0, -1):
+            if self.is_empty(i, column) == False:
+                return False
+        return True
+
+
+    def search_first_row_with_empty_cell(self):
+        for row in range(self.num_rows - 1, 0, -1):
+            for column in range(self.num_cols):
+                if self.is_empty(row, column) and self.all_cells_above_are_empty(row, column) == True:
+                    return row
+                    
+
+    def search_empty_cells(self):
+        first_row = self.search_first_row_with_empty_cell()
+        dict_of_empty_cells = {}
+
+        for row in range(first_row, first_row - 1 - 1, -1):
+            dict_of_empty_cells[row] = []
+            for column in range(self.num_cols):
+                if self.is_empty(row, column) == True and self.all_cells_above_are_empty(row, column):
+                    if column not in (dict_of_empty_cells.get(first_row)):
+                        dict_of_empty_cells[row].append(column)
+        
+        print(dict_of_empty_cells)
+        print()
+
+        # сортировать на всякия случай ?????
+        return dict_of_empty_cells
+                        
+
     def draw(self, screen):
         for row in range(self.num_rows):
             for column in range(self.num_cols):

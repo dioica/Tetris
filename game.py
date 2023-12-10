@@ -46,6 +46,58 @@ class Game:
         if self.block_fits() == False:
             self.game_over = True
 
+        self.auto_tetris()
+            
+        
+
+    def auto_tetris(self):
+        #self.current_block = self.next_block
+        #self.next_block = self.get_random_block()
+
+        # словарь с пустыми клетками, который надо перебрать
+        dict_of_empty_cells = self.grid.search_empty_cells()
+        for row in dict_of_empty_cells:
+            for column in dict_of_empty_cells.get(row):
+                print(row, " ", column)
+
+                # для каждой клетки попробовать расположить блок 
+                # перебрав все повороты блока
+                for rotate in range(len(self.current_block.cells)):
+                    if rotate != 0:
+                        self.rotate()
+
+                        # если не удается повернуть блок
+                        # двигать, пока не получится повернуть
+                        if self.current_block.rotation_state != rotate:
+                            self.move_for_rotation(rotate)
+                        
+                # разместить блок над пустой клеткой
+                
+                # найти строку, где он остановится
+
+                # подсчисать количество пустых клеток под блоком
+                ## если 0, конец
+                ## иначе сравнить и если это наилучщий вариант, то запомнить
+
+        
+    def search_fall_position(self):
+
+
+        return 0
+        
+    def move_for_rotation(self, rotate):
+        for i in range(4):
+            self.move_left()
+            self.rotate()
+            if self.current_block.rotation_state == rotate:
+                return 0
+
+        for i in range(4):
+            self.move_right()
+            self.rotate()
+            if self.current_block.rotation_state == rotate:
+                return 0 
+
     def reset(self):
         self.grid.reset()
         self.blocks = [IBlock(), JBlock(), LBlock(), OBlock(), SBlock(), TBlock(), ZBlock()]

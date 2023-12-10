@@ -1,20 +1,49 @@
 from block import Block
 from position import Position
 
-class LBlock(Block):
+'''
+class L1Block(Block):
 	def __init__(self):
-		super().__init__(id = 1)
+		super().__init__(id = 11)
+
+
+        #self.high = [0, 0, 0, 0]
 		self.cells = {
 			0: [Position(0, 2), Position(1, 0), Position(1, 1), Position(1, 2)],
 			1: [Position(0, 1), Position(1, 1), Position(2, 1), Position(2, 2)],
 			2: [Position(1, 0), Position(1, 1), Position(1, 2), Position(2, 0)],
 			3: [Position(0, 0), Position(0, 1), Position(1, 1), Position(2, 1)]
 		}
+          
 		self.move(0, 3)
+'''
+
+class LBlock(Block):
+    def __init__(self):
+        super().__init__(id = 1)
+
+        self.heigh = []
+        self.lenght = []
+        self.left_offset = []
+        self.right_offset = []
+        self.irregularities = []
+
+        self.cells = {
+			0: [Position(0, 2), Position(1, 0), Position(1, 1), Position(1, 2)],
+			1: [Position(0, 1), Position(1, 1), Position(2, 1), Position(2, 2)],
+			2: [Position(1, 0), Position(1, 1), Position(1, 2), Position(2, 0)],
+			3: [Position(0, 0), Position(0, 1), Position(1, 1), Position(2, 1)]
+		}
+
+        self.move(0, 3)
+        
 
 class JBlock(Block):
     def __init__(self):
         super().__init__(id = 2)
+
+        self.heigh = [0, 0, 0, 0]
+
         self.cells = {
             0: [Position(0, 0), Position(1, 0), Position(1, 1), Position(1, 2)],
             1: [Position(0, 1), Position(0, 2), Position(1, 1), Position(2, 1)],

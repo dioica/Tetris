@@ -5,6 +5,13 @@ from position import Position
 class Block:
     def __init__(self, id):
         self.id = id
+
+        self.heigh = []
+        self.lenght = []
+        self.left_offset = []
+        self.right_offset = []
+        self.irregularities = []
+
         self.cells = {}
         self.cell_size = 30
         self.rotation_state = 0
