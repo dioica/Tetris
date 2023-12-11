@@ -244,8 +244,12 @@ class TestGame(unittest.TestCase):
         self.t_game.blocks = []
         self.t_game.reset()
         result = [IBlock(), JBlock(), LBlock(), OBlock(), SBlock(), TBlock(), ZBlock()]
-        #for i in range(len(result)):
-            #self.assertEquals(self.t_game.blocks[i], result[i])
+
+        self.assertEquals(len(self.t_game.blocks), len(result) - 2)
+
+        for row in range(self.t_game.grid.num_rows):
+            for column in range(self.t_game.grid.num_cols):
+                self.assertEquals(self.t_game.grid.grid[row][column], 0)
 
     def test_move_for_rotation_right(self):
         self.t_game.current_block = LBlock()
