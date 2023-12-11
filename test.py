@@ -629,5 +629,51 @@ class TestGame(unittest.TestCase):
             self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, result[i])
         self.assertEqual(self.t_game.current_block.rotation_state, 3)
 
+
+class TestBlock(unittest.TestCase):
+    def setUp(self):
+        self.t_block = LBlock()
+
+    def tearDown(self):
+        del self.t_block
+
+    def test_move(self):
+        first_col_offset = self.t_block.column_offset 
+        first_row_offset = self.t_block.row_offset 
+        self.t_block.move(6, -3)
+        self.assertEqual(self.t_block.column_offset, first_col_offset - 3)
+        self.assertEqual(self.t_block.row_offset, first_row_offset + 6)
+
+    def test_get_cell_positions(self):
+        self.t_block.row_offset = 3
+        self.t_block.column_offset = 3
+
+        result = [Position(1, 0), Position(1, 1), Position(1, 2), Position(0, 2)]
+        for i in range(4):
+            self.assertEqual(self.t_block.get_cell_positions()[i].column, result[i].column + self.t_block.column_offset) 
+            self.assertEqual(self.t_block.get_cell_positions()[i].row, result[i].row + self.t_block.row_offset)
+    
+    def test_rotate_1_rotate(self):
+        first_rotation = self.t_block.rotation_state 
+        self.t_block.rotate()
+        self.assertEqual(self.t_block.rotation_state, first_rotation + 1)
+
+    def test_rotate_4_rotates(self):
+        first_rotation = self.t_block.rotation_state 
+        for i in range((len(self.t_block.cells))):
+            self.t_block.rotate()
+        self.assertEqual(self.t_block.rotation_state, first_rotation)
+
+    def test_undo_rotations_first_0_rotate(self):
+        first_rotation = self.t_block.rotation_state 
+        self.t_block.undo_rotation()
+        self.assertEqual(self.t_block.rotation_state, 3)
+
+    def test_undo_rotations_first_3_rotate(self):
+        self.t_block.rotation_state = 3
+        self.t_block.undo_rotation()
+        self.assertEqual(self.t_block.rotation_state, 2)
+
+
 if __name__ == '__main__':
     unittest.main()
