@@ -1,3 +1,5 @@
+[![Coverage Status](https://coveralls.io/repos/github/dioica/Tetris/badge.svg?branch=main)](https://coveralls.io/github/dioica/Tetris?branch=main)
+
 # Аттестационное тестирование
 ## Тест 1
 
