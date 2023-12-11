@@ -826,6 +826,10 @@ class TestGame(unittest.TestCase):
             self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, result[i])
         self.assertEqual(self.t_game.current_block.rotation_state, 3)
 
+        for i in range(len(result)):
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, result[i])
+        self.assertEqual(self.t_game.current_block.rotation_state, 3)
+
 
 
 

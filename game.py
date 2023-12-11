@@ -93,10 +93,12 @@ class Game:
                         print("Пустая клетка", row, " ", column)
                         print("Поворот", self.current_block.rotation_state)
                         print("Позиция падения", fall_row)
-                        print()
+                        
 
                         # подсчисать количество пустых клеток под блоком
                         count_of_empty_cells = self.count_of_empty_cells_under_block(fall_row)
+                        print("количество пустых клеток", count_of_empty_cells)
+                        print()
 
                         ## если 0, конец
                         if count_of_empty_cells == 0:
