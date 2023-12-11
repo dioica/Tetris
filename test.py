@@ -187,24 +187,23 @@ class TestGame(unittest.TestCase):
 
     def test_move_down_move(self):
         self.t_game.move_down()
-
         result = [Position(1, 4), Position(1, 5), Position(2, 4), Position(2, 5)]
 
         for i in range(4):
             self.assertEqual(self.t_game.current_block.get_cell_positions()[i].row, result[i].row )
             self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, result[i].column)
 
-    '''    
+     
     def test_move_down_not_move(self):
-        for i in range(20):
-            self.t_game.move_down()
+        self.t_game.current_block.move(17, 0)
+        self.t_game.move_down()
 
-        result = [Position(18, 4), Position(19, 5), Position(18, 4), Position(19, 5)]
+        result = [Position(18, 4), Position(18, 5), Position(19, 4), Position(19, 5)]
 
-        for i in range(4):
+        for i in range(2):
             self.assertEqual(self.t_game.current_block.get_cell_positions()[i].row, result[i].row )
             self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, result[i].column)
-    '''
+    
 
     # ?????????
     def test_lock_block(self):
@@ -233,11 +232,11 @@ class TestGame(unittest.TestCase):
         self.t_game.reset()
         result = [IBlock(), JBlock(), LBlock(), OBlock(), SBlock(), TBlock(), ZBlock()]
 
-        self.assertEquals(len(self.t_game.blocks), len(result) - 2)
+        self.assertEqual(len(self.t_game.blocks), len(result) - 2)
 
         for row in range(self.t_game.grid.num_rows):
             for column in range(self.t_game.grid.num_cols):
-                self.assertEquals(self.t_game.grid.grid[row][column], 0)
+                self.assertEqual(self.t_game.grid.grid[row][column], 0)
 
     def test_move_for_rotation_right(self):
         self.t_game.current_block = LBlock()
