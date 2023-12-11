@@ -6,7 +6,6 @@ from colors import Colors
 from blocks import *
 from position import Position
 
-
 class TestGrid(unittest.TestCase):
     def setUp(self):
         self.t_grid = Grid()
