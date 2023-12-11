@@ -23,6 +23,7 @@ jobs:
     - run: git submodule update
     - run: pip install --user cpp-coveralls
     - run: pip install pygame
+    - run: pip install coveralls
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
@@ -48,7 +49,6 @@ jobs:
     - name: Coveralls
       #run: coveralls -t ${{ secrets.COVERALLS_REPO_TOKEN }}  --root . # -E ".*external.*" -E ".*tests.*"
     - run: |
-        pip install coveralls
         coverage run --source=mypkg -m unittest test.py 
         coveralls
 
