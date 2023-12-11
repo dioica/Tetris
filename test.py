@@ -353,6 +353,36 @@ class TestGame(unittest.TestCase):
         self.assertEqual(self.t_game.grid.grid, result_grid)
 
         
+    def test_lock_block_game_over(self):
+        self.t_game.grid.grid = [
+            [0, 1, 0, 1, 0, 1, 1, 0, 1, 0],
+            [1, 0, 0, 0, 1, 1, 1, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [1, 1, 1, 0, 0, 0, 1, 1, 1, 1]
+            ]
+
+        #self.t_game.current_block.move(18, 0)
+        self.t_game.lock_block()
+
+        self.assertTrue(self.t_game.game_over)
+
+
     def test_rotate_change(self):
         self.t_game.current_block = JBlock()
         first_rotation = self.t_game.current_block.rotation_state
@@ -795,6 +825,8 @@ class TestGame(unittest.TestCase):
         for i in range(len(result)):
             self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, result[i])
         self.assertEqual(self.t_game.current_block.rotation_state, 3)
+
+
 
 
 class TestBlock(unittest.TestCase):
