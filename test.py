@@ -150,10 +150,17 @@ class TestGame(unittest.TestCase):
         self.t_game.move_left()
         result = [Position(0, 3), Position(0, 4), Position(1, 3), Position(1, 4)]
 
+<<<<<<< HEAD
         
         for i in range(4):
             self.assertEqual(self.t_game.current_block.get_cell_positions()[i].row, result[i].row)
             self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, result[i].column)
+=======
+        for i in range(4):
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].row, result[i].row)
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, result[i].column)
+     
+>>>>>>> d5ac24888a64f7a6bff00472ec53024e801966df
      
     def test_move_left_not_move(self):
         for i in range(3):
