@@ -781,16 +781,16 @@ class TestGame(unittest.TestCase):
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
-            [1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
-            [1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-            [1, 0, 0, 1, 1, 0, 0, 1, 1, 0]
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 1, 0, 1, 0, 0, 1, 1, 0],
+            [0, 0, 1, 0, 1, 1, 0, 1, 1, 0],
+            [1, 0, 1, 1, 1, 1, 1, 1, 0, 0],
+            [1, 1, 1, 1, 1, 1, 0, 1, 1, 0]
             ]
         self.t_game.current_block = LBlock()
 
         self.t_game.auto_tetris()
-        result = [8, 9, 9, 9]
+        result = [0, 1, 1, 1]
 
         for i in range(len(result)):
             self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, result[i])
