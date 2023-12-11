@@ -160,7 +160,7 @@ class TestGame(unittest.TestCase):
 
         result = [Position(0, 1), Position(0, 2), Position(1, 1), Position(1, 2)]
 
-        for i in range(2):
+        for i in range(4):
             self.assertEqual(self.t_game.current_block.get_cell_positions()[i].row, result[i].row)
             self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, result[i].column)
 
