@@ -109,9 +109,11 @@ class Game:
         
             # все клетки перебраны      
 
+            '''
             # нужный поворот блока
             if self.current_block.rotation_state != best_rotation:
                 self.move_for_rotation(rotate)
+
 
             # смещение блока
             if self.current_block.get_cell_positions()[self.current_block.X[self.current_block.rotation_state]].column > column:
@@ -123,6 +125,7 @@ class Game:
 
             print(min_empty_cells)
             return(0)
+            '''
 
     def count_of_empty_cells_under_block(self, fall_row):
         count = 0
