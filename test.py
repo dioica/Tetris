@@ -764,6 +764,38 @@ class TestGame(unittest.TestCase):
             self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, result[i])
         self.assertEqual(self.t_game.current_block.rotation_state, 3)
 
+    def test_auto_tetris_empty_cells_under_block_rotation(self):
+        self.t_game.grid.grid = [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+            [1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [1, 0, 0, 1, 1, 0, 0, 1, 1, 0]
+            ]
+        self.t_game.current_block = LBlock()
+
+        self.t_game.auto_tetris()
+        result = [8, 9, 9, 9]
+
+        for i in range(len(result)):
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, result[i])
+        self.assertEqual(self.t_game.current_block.rotation_state, 3)
+
 
 class TestBlock(unittest.TestCase):
     def setUp(self):
