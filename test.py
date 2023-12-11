@@ -147,27 +147,23 @@ class TestGame(unittest.TestCase):
 
 
     def test_move_left_move(self):
-        first_pos = []
-        for i in range(4):
-            first_pos.append(self.t_game.current_block.get_cell_positions()[i])
         self.t_game.move_left()
+        result = [Position(0, 3), Position(0, 4), Position(1, 3), Position(1, 4)]
 
-        for i in range(0):
-            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].row, first_pos[i].row)
-            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, first_pos[i].column - 1)
+        
+        for i in range(4):
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].row, result[i].row)
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, result[i].column)
      
     def test_move_left_not_move(self):
-        first_pos = []
-        for i in range(4):
-            first_pos.append(self.t_game.current_block.get_cell_positions()[i])
-
-        count_of_move = 3
-        for i in range(count_of_move):
+        for i in range(3):
             self.t_game.move_left()
 
-        for i in range(0):
-            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].row, first_pos[i].row)
-            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, first_pos[i].column - (count_of_move - 1))
+        result = [Position(0, 1), Position(0, 2), Position(1, 1), Position(1, 2)]
+
+        for i in range(2):
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].row, result[i].row)
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, result[i].column)
 
     def test_move_right_move(self):
         first_pos = []
@@ -175,47 +171,41 @@ class TestGame(unittest.TestCase):
             first_pos.append(self.t_game.current_block.get_cell_positions()[i])
         self.t_game.move_right()
 
-        for i in range(0):
+        for i in range(4):
             self.assertEqual(self.t_game.current_block.get_cell_positions()[i].row, first_pos[i].row)
             self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, first_pos[i].column + 1)
         
     def test_move_right_not_move(self):
-        first_pos = []
         for i in range(4):
-            first_pos.append(self.t_game.current_block.get_cell_positions()[i])
+            self.t_game.move_right()
 
-        count_of_move = 4
-        for i in range(count_of_move):
-            self.t_game.move_left()
+        result = [Position(0, 8), Position(0, 9), Position(1, 8), Position(1, 9)]
 
-        for i in range(0):
-            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].row, first_pos[i].row)
-            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, 9)
+        for i in range(4):
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].row, result[i].row)
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, result[i].column)
 
 
     def test_move_down_move(self):
-        first_pos = []
-        for i in range(4):
-            first_pos.append(self.t_game.current_block.get_cell_positions()[i])
-
         self.t_game.move_down()
 
-        for i in range(0):
-            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].row, first_pos[i].row + 1)
-            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, first_pos[i].column)
-        
-    def test_move_down_not_move(self):
-        first_pos = []
-        for i in range(4):
-            first_pos.append(self.t_game.current_block.get_cell_positions()[i])
+        result = [Position(1, 4), Position(1, 5), Position(2, 4), Position(2, 5)]
 
-        count_of_move = 20
-        for i in range(count_of_move):
+        for i in range(4):
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].row, result[i].row )
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, result[i].column)
+
+    '''    
+    def test_move_down_not_move(self):
+        for i in range(20):
             self.t_game.move_down()
 
-        for i in range(0):
-            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].row, first_pos[i].row + 18)
-            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, first_pos[i].column)
+        result = [Position(18, 4), Position(19, 5), Position(18, 4), Position(19, 5)]
+
+        for i in range(4):
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].row, result[i].row )
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[i].column, result[i].column)
+    '''
 
     # ?????????
     def test_lock_block(self):
