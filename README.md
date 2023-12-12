@@ -750,3 +750,49 @@ current_block.move(18, 0)
 ```
 
 Ожидаемый результат: game_over == True
+
+## И9 test_rotate_not
+Описание: Поворачивает блок
+
+Взаимодействует с методом block.rotate(), block.undo_rotation()
+
+Метод: rotate()
+
+Входные данные:
+current_block = JBlock()
+
+Ожидаемый результат: block.rotation_state = 1
+
+## И9 test_rotate_change
+Описание: Поворачивает блок и отменяет поворот, в результате block.rotation_state не изменяется
+
+Взаимодействует с методом block.rotate(), block.undo_rotation()
+
+Метод: rotate()
+
+Входные данные: -
+
+Ожидаемый результат: block.rotation_state = 0
+
+## И10 test_rotate__4_times
+Описание: Поворачивает блок 4 раза, в результате block.rotation_state не изменяется
+
+Взаимодействует с методом block.rotate(), block.undo_rotation()
+
+Метод: rotate()
+
+Входные данные: current_block = JBlock()
+
+Ожидаемый результат: block.rotation_state = 0
+
+## И0
+Описание:
+
+Взаимодействует с методом grid.
+
+Метод:
+
+Входные данные:
+
+Ожидаемый результат:![image](https://github.com/dioica/Tetris/assets/86318428/2c320618-cc19-4aca-a023-f8d6718ea066)
+
