@@ -626,6 +626,47 @@ current_block = OBlock()
 
 Ожидаемый результат: [Position(0, 8), Position(0, 9), Position(1, 8), Position(1, 9)]
 
+## И5 test_move_right_down
+Описание: Сдвигает блок вниз
+
+Взаимодействует с методом grid.move()
+
+Метод: move_down()
+
+Входные даные: -
+
+Ожидаемый результат: [Position(1, 4), Position(1, 5), Position(2, 4), Position(2, 5)]
+
+## И6 test_move_right_not_down
+Описание: Сдвигает блок вниз 19 раз, пока тот не зафиксируется
+
+Взаимодействует с методом grid.move(), grid.lock_block()
+
+Метод: move_down()
+
+Входные даные: -
+
+Ожидаемый результат: 
+```
+if self.t_game.current_block.id in [1, 3]:
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[0].row, 1)
+else:
+            self.assertEqual(self.t_game.current_block.get_cell_positions()[0].row, 0)
+    
+```
+
+## И7
+Описание:
+
+Взаимодействует с методом grid.
+
+Метод:
+
+Входные даные:
+
+Ожидаемый результат:
+
+
 ## И0
 Описание:
 
