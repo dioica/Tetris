@@ -539,6 +539,23 @@ block = LBlock
 
 Ожидаемый результат: [Position(4, 3), Position(4, 3), Position(4, 5), Position(3,5)]
 
+## Б19 test_rotate_1_rotate
+Описание: Поворачивает блок 1 раз
+
+Метод: rotate()
+
+Входные даные: - 
+
+Ожидаемый результат: block.rotation_state = 1
+
+## Б20 test_rotate_4_rotate
+Описание: Поворачивает блок 4 раза
+
+Метод: rotate()
+
+Входные даные: - 
+
+Ожидаемый результат: block.rotation_state = 0
 
 
 ## Б0
