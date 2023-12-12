@@ -548,7 +548,7 @@ block = LBlock
 
 Ожидаемый результат: block.rotation_state = 1
 
-## Б20 test_rotate_4_rotate
+## Б20 test_rotate_4_rotates
 Описание: Поворачивает блок 4 раза
 
 Метод: rotate()
@@ -558,14 +558,23 @@ block = LBlock
 Ожидаемый результат: block.rotation_state = 0
 
 
-## Б0
-Описание:
+## Б21 test_undo_rotations_first_0_rotate
+Описание: Отменяет поворот блока для блока с поворотом 0
 
-Метод:
+Метод: undo_rotation()
 
-Входные даные:
+Входные даные: -
 
-Ожидаемый результат:
+Ожидаемый результат: 3
+
+## Б22 test_undo_rotations_first_3_rotate(
+Описание: Отменяет поворот блока для блока с поворотом 3
+
+Метод: undo_rotation()
+
+Входные даные: block.rotation_state = 3
+
+Ожидаемый результат: 2
 
 # Интеграционное тестирование
 ## И1
